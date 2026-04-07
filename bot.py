@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-DB_PATH = "homework.db"
+DB_PATH = "data/homework.db"
 
 async def init_db():
     async with aiosqlite.connect(DB_PATH) as db:
@@ -57,6 +57,7 @@ def get_scope_id(message):
     return message.chat.id if message.chat.type in ['group', 'supergroup'] else message.from_user.id
 
 async def main():
+    os.makedirs("data", exist_ok=True)
     await init_db()
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
